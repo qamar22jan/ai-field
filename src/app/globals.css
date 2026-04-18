@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+/* ── Custom Theme (Tailwind v4 way) ── */
+@theme {
+  /* Brand Colors */
+  --color-brand-bg: #0a0a0a;
+  --color-brand-surface: #111111;
+  --color-brand-border: #1f1f1f;
+  --color-brand-primary: #e8572a;
+  --color-brand-secondary: #c8410f;
+  --color-brand-glow: #ff6b35;
+  --color-brand-accent: #1a1a2e;
+  --color-brand-text: #ffffff;
+  --color-brand-muted: #888888;
+  --color-brand-subtle: #333333;
+
+  /* Fonts */
+  --font-grotesk: "Space Grotesk", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* Animations */
+  --animate-fade-in: fadeIn 0.8s ease-out forwards;
+  --animate-slide-up: slideUp 0.8s ease-out forwards;
+  --animate-glow-pulse: glowPulse 3s ease-in-out infinite;
+}
+
+/* ── Keyframes ── */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ── Base Reset ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #e8572a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6b35;
+}
+
+/* ── Selection Color ── */
+::selection {
+  background: rgba(232, 87, 42, 0.4);
+  color: #ffffff;
+}
+
+/* ── Utility Classes ── */
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #e8572a 50%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glow-border {
+  border: 1px solid rgba(232, 87, 42, 0.3);
+  box-shadow: 0 0 20px rgba(232, 87, 42, 0.1);
+}
+
+/* Hide scrollbar for nav */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Featured Section — Infinite Carousel
+   ═══════════════════════════════════════════════ */
+
+/* Smooth infinite scroll keyframe */
+@keyframes infiniteScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Section wrapper */
+.featured-section {
+  background-color: #0f0f0f;
+  padding: 30px 0 0 0;
+  overflow: hidden;
+}
+
+/* Carousel viewport — clips the scrolling track */
+.carousel-viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+/* The scrolling track — duplicated cards inside */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: infiniteScroll 25s linear infinite;
+}
+
+/* Edge fade gradients */
+.carousel-fade-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, #0f0f0f, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+.carousel-fade-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(270deg, #0f0f0f, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Single carousel card */
+.carousel-card {
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 380px;
+}
+
+/* Card image area (the tall dark rectangle) */
+.card-image-area {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+/* Absolute-positioned layer (for gradients, grain, etc.) */
+.card-layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* Bottom overlay with tag + badge */
+.card-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+/* Small "NexAI" tag text */
+.card-tag {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "Inter", sans-serif;
+  margin-bottom: 2px;
+}
+
+/* Italic subtitle (e.g. "Marketing Studio") */
+.card-subtitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  font-style: italic;
+}
+
+/* Glass morphism badge */
+.glass-badge {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 6px 14px;
+}
+
+/* Badge text (e.g. "MARKETING STUDIO") */
+.badge-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Card info below the image */
+.card-info {
+  padding: 12px 4px 20px 4px;
+}
+.card-info-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  margin-bottom: 4px;
+}
+.card-info-desc {
+  font-size: 12px;
+  color: #888888;
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════
+   Responsive — Stack on mobile
+   ═══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .carousel-card {
+    width: 300px;
+  }
+  .card-image-area {
+    height: 220px;
+  }
+}
